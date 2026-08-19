@@ -10,6 +10,11 @@ from page.detail_layanan_page import DetailLayananPage
 @allure.feature("Layanan")
 class TestLayanan:
 
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_login(self, ensure_mobile_logged_in):
+        """Memastikan test suite Layanan dijalankan dalam kondisi login."""
+        pass
+
     @pytest.fixture(autouse=True)
     def reset_to_beranda(self, class_beranda):
         """Kembali ke Beranda sebelum tiap test."""

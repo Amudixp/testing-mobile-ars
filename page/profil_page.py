@@ -27,18 +27,24 @@ class ProfilPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def _tap_fast(self, locator: tuple, max_swipes: int = 2):
-        """Tap elemen langsung tanpa swipe jika sudah ada di layar. Swipe max 2x jika belum ada."""
+    def _tap_fast(self, locator: tuple, max_swipes: int = 3):
+        """Tap elemen langsung jika terlihat. Jika belum, swipe down / swipe up untuk mencari elemen."""
         if self.is_element_displayed(locator, timeout=1.5):
-            self.tap(locator, timeout=3)
+            self.tap(locator, timeout=5)
             return
         for _ in range(max_swipes):
             self.swipe_down()
             time.sleep(0.3)
             if self.is_element_displayed(locator, timeout=1.5):
-                self.tap(locator, timeout=3)
+                self.tap(locator, timeout=5)
                 return
-        self.tap(locator, timeout=3)
+        for _ in range(max_swipes):
+            self.swipe_up()
+            time.sleep(0.3)
+            if self.is_element_displayed(locator, timeout=1.5):
+                self.tap(locator, timeout=5)
+                return
+        self.tap(locator, timeout=5)
 
     def buka_detail_akun(self):
         self._tap_fast(self.TOMBOL_DETAIL_AKUN)

@@ -60,20 +60,28 @@ class BasePage:
         return False
 
     def _navigate_to_tab(self, tab_locator: tuple, tab_name: str = ""):
-        """Navigasi ke tab bottom nav secara sangat cepat."""
-        if self.is_element_displayed(tab_locator, timeout=0.8):
-            self.tap(tab_locator, timeout=2)
+        """Navigasi ke tab bottom nav secara andal dan cepat dari halaman mana pun."""
+        self.ensure_app_in_foreground()
+        self.handle_permission_alert(timeout=0.2)
+
+        if self.is_element_displayed(tab_locator, timeout=1.0):
+            self.tap(tab_locator, timeout=3)
             return
-        for _ in range(2):
+
+        # Jika sedang di sub-page (misal detail dokumen/layanan), tekan back sampai bottom nav terlihat
+        for _ in range(5):
             try:
                 self.driver.back()
             except Exception:
                 pass
-            if self.is_element_displayed(tab_locator, timeout=0.8):
-                self.tap(tab_locator, timeout=2)
+            time.sleep(0.3)
+            self.handle_permission_alert(timeout=0.2)
+            if self.is_element_displayed(tab_locator, timeout=1.0):
+                self.tap(tab_locator, timeout=3)
                 return
+
         self.ensure_app_in_foreground()
-        self.tap(tab_locator, timeout=3)
+        self.tap(tab_locator, timeout=5)
 
     def go_to_beranda(self):
         self._navigate_to_tab(self.TAB_BERANDA, "Beranda")

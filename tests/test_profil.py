@@ -7,22 +7,15 @@ from page.login_pages import LoginPage
 
 @allure.feature("Profil")
 class TestProfil:
-    @pytest.fixture(scope="class", autouse=True)
     @classmethod
-    def setup_login_class(cls, class_beranda, class_login):
-        try:
-            class_beranda.tap_masuk_header()
-        except:
-            pass
-        class_login.login("admin@portal.dev", "Admin123!")
-        for _ in range(20):
-            if not class_beranda.is_element_displayed(class_login.LOGIN_PAGE_INDICATOR, timeout=0.5):
-                break
-            time.sleep(0.2)
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_login_class(cls, ensure_mobile_logged_in):
+        pass
 
     @pytest.fixture(autouse=True)
     def reset_to_profil(self, class_beranda):
         class_beranda.go_to_profil()
+        class_beranda.scroll_to_top(max_swipes=2)
 
     @allure.story("Profil")
     @allure.title("PROFIL-01: View Dokumen Saya -> Search -> Detail -> Unduh")

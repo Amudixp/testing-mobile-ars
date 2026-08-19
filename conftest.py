@@ -34,7 +34,7 @@ def grant_app_permissions():
 
 def dismiss_permission_dialog(driver):
     try:
-        BerandaPage(driver).handle_permission_alert(timeout=2)
+        BerandaPage(driver).handle_permission_alert(timeout=0.3)
     except Exception:
         pass
 
@@ -97,3 +97,18 @@ def class_login(class_driver):
 @pytest.fixture(scope="class")
 def class_profil(class_driver):
     return ProfilPage(class_driver)
+
+
+@pytest.fixture(scope="class")
+def ensure_mobile_logged_in(class_beranda, class_login):
+    """Fixture class-level untuk memastikan mobile app dalam kondisi login via UI."""
+    try:
+        class_beranda.tap_masuk_header()
+        class_login.login("admin@portal.dev", "Admin123!")
+        for _ in range(20):
+            if not class_beranda.is_element_displayed(class_login.LOGIN_PAGE_INDICATOR, timeout=0.5):
+                break
+            time.sleep(0.5)
+        class_beranda.go_to_beranda()
+    except Exception:
+        pass

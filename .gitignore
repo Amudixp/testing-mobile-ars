@@ -1,0 +1,32 @@
+# Virtual Environment (Dependensi lokal tidak boleh di-push)
+venv/
+.venv/
+env/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Allure Test Reports & Results
+allure-results/
+allure-report/
+allure-resultspytest/
+
+# Large binaries (Apk files - opsional jika tidak ingin push file APK 72MB ke GitHub)
+# *.apk
+
+# Temporary logs & output
+*.log
+*.tmp
+output*.txt
+
+# Local login state / credentials
+state.json
+
+# IDE & System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

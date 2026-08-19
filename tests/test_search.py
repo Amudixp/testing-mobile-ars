@@ -6,6 +6,12 @@ from page.beranda_page import BerandaPage
 
 @allure.feature("Search")
 class TestSearch:
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_login(self, ensure_mobile_logged_in):
+        """Memastikan test suite Search dijalankan dalam kondisi login."""
+        pass
+
     @pytest.fixture(autouse=True)
     def reset_to_beranda(self, class_beranda):
         class_beranda.go_to_beranda()
