@@ -14,8 +14,9 @@ allure-results/
 allure-report/
 allure-resultspytest/
 
-# Large binaries (Apk files - opsional jika tidak ingin push file APK 72MB ke GitHub)
-# *.apk
+# Large binaries (Apk files)
+*.apk
+app.apk
 
 # Temporary logs & output
 *.log
